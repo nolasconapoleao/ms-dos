@@ -1,0 +1,82 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Create env",
+            "type": "shell",
+            "command": "init-env.bat",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            }
+        }, 
+        {
+            "label": "Get family",
+            "type": "shell",
+            "command": [
+                "bash -c \"",
+                    "a=$(realpath ${fileBasename} | sed -rn 's/.*test-env\\/vertebrate\\/([A-Za-z0-9]+).*/\\1/p')",
+                    "&& echo $a",
+                "\" > tmp",
+                "&& cd ${workspaceFolder}",
+                "&& move ${relativeFileDirname}\\tmp .vscode\\tmp",
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+        },
+        {
+            "label": "Save family",
+            "type": "shell",
+            "command": [
+                "bash -c \"",
+                    "a=`cat tmp`",
+                    "&& sed -ri 's|\\\"TEMP\\\" : \\\"[A-Za-z0-9]+\\\",|\\\"TEMP\\\" : \\\"'${a}'\\\",|g' settings.json",
+                "\"",
+                "&& del tmp",
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/.vscode"
+            },
+            "dependsOn": ["Get family"]
+        },
+        {
+            "label": "Use family",
+            "type": "shell",
+            "command": "echo ${config:TEMP}",
+            "dependsOn": ["Save family"]
+        },
+
+        {
+            "label": "Schedule event",
+            "type": "shell",
+            "command": "echo",
+            "args": ["${input:weekday}", "${input:event}"]
+        }
+    ],
+    "inputs": [
+        {
+            "type": "pickString",
+            "id": "weekday",
+            "description": "What weekday is it?",
+            "options": [
+                "monday",
+                "tuesday",
+                "wednesday",
+                "thursday",
+                "friday",
+                "saturday",
+                "sunday",
+            ],
+            "default": "component"
+        },
+        {
+            "type": "promptString",
+            "id": "event",
+            "description": "Name the event.",
+            "default": "Water crops"
+        }
+    ]
+}
+

@@ -10,13 +10,13 @@ echo haha > laughing.txt
 echo lol >> laughing.txt
 echo kkk >> laughing.txt
 
-echo Spirit > mars-soacecrafts.txt
-echo Opportunity >> mars-soacecrafts.txt
-echo InSight >> mars-soacecrafts.txt
-echo Curiosity >> mars-soacecrafts.txt
-echo Hope >> mars-soacecrafts.txt
-echo Perseverance >> mars-soacecrafts.txt
-echo Ingenuity >> mars-soacecrafts.txt
+echo Spirit > mars-spacecrafts.txt
+echo Opportunity >> mars-spacecrafts.txt
+echo InSight >> mars-spacecrafts.txt
+echo Curiosity >> mars-spacecrafts.txt
+echo Hope >> mars-spacecrafts.txt
+echo Perseverance >> mars-spacecrafts.txt
+echo Ingenuity >> mars-spacecrafts.txt
 
 :: Copy directory
 cd ..
@@ -58,10 +58,14 @@ mkdir vertebrate\amphibian
 cd vertebrate\amphibian
 echo Frog > frog.txt
 echo Toad > toad.txt
-cd ..\..
+cd ..\..\..
 
 tree > tree.txt
 dir > dir.txt
+
+echo { > .vscode\settings.json 
+echo  "TEMP" : "NOTHING", >> .vscode\settings.json 
+echo } >> .vscode\settings.json 
 
 :: Piped command
 tree | find "h"
