@@ -17,7 +17,6 @@
             "command": [
                 "bash -c \"",
                     "a=$(realpath ${fileBasename} | sed -rn 's/.*test-env\\/vertebrate\\/([A-Za-z0-9]+).*/\\1/p')",
-                    "&& echo $a",
                 "\" > tmp",
                 "&& cd ${workspaceFolder}",
                 "&& move ${relativeFileDirname}\\tmp .vscode\\tmp",
@@ -31,10 +30,10 @@
             "type": "shell",
             "command": [
                 "bash -c \"",
-                    "a=`cat tmp`",
-                    "&& sed -ri 's|\\\"TEMP\\\" : \\\"[A-Za-z0-9]+\\\",|\\\"TEMP\\\" : \\\"'${a}'\\\",|g' settings.json",
+                    "var=`cat tmp`",
+                    "&& sed -ri 's|\\\"TEMP\\\" : \\\"[A-Za-z0-9]+\\\",|\\\"TEMP\\\" : \\\"'${var}'\\\",|g' settings.json",
+                    "&& rm tmp",
                 "\"",
-                "&& del tmp",
             ],
             "options": {
                 "cwd": "${workspaceFolder}/.vscode"
